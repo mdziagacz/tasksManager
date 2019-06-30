@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export PROJECT_PATH="$( pwd )"
+export CATALINA_HOME=/Users/mohhio/Desktop/apache-tomcat-9.0.21
 
 build_deploy(){
     if $PROJECT_PATH/runcrud.sh; then
@@ -11,8 +12,17 @@ build_deploy(){
 }
 
 show_tasks(){
-    open http://localhost:8080/crud/v1/task/getTasks
+    if timeout 10 open -a safari & osascript -e 'tell application "Safari" to open location "http://localhost:8080/crud/v1/task/getTasks"'; then
+        echo "seccess"
+    else
+        echo "timeout reached"
+    fi
+}
+
+stop(){
+    $CATALINA_HOME/bin/catalina.sh stop
 }
 
 build_deploy
 show_tasks
+stop
