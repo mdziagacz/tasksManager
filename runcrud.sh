@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-export CATALINA_HOME=/Users/mohhio/Desktop/apache-tomcat-9.0.21
+export CATALINA_HOME=/Users/mohhio/Desktop/kodillaProjects/apache-tomcat-9.0.21
 
 stop_tomcat()
 {

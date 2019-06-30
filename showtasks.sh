@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 export PROJECT_PATH="$( pwd )"
-export CATALINA_HOME=/Users/mohhio/Desktop/apache-tomcat-9.0.21
+export CATALINA_HOME=/Users/mohhio/Desktop/kodillaProjects/apache-tomcat-9.0.21
 
 build_deploy(){
     if $PROJECT_PATH/runcrud.sh; then
