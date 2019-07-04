@@ -1,8 +1,6 @@
 package com.crud.tasks.trello.client;
 
-import com.crud.tasks.controller.TrelloBoardNotFoundException;
 import com.crud.tasks.domain.TrelloBoardDto;
-import com.sun.jndi.toolkit.url.Uri;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -27,17 +25,17 @@ public class TrelloClient {
     @Value("${trello.api.token}")
     private String trelloApiToken;
 
-    @Value(("${trello.api.username}"))
+    @Value("${trello.api.username}")
     private String trelloUserName;
 
     @Autowired
     private RestTemplate restTemplate;
 
-    public List<TrelloBoardDto> getTrelloBoards() throws TrelloBoardNotFoundException{
+    public List<TrelloBoardDto> getTrelloBoards(){
 
         TrelloBoardDto[] boardsResponse = restTemplate.getForObject(getURL(),TrelloBoardDto[].class);
 
-        return Optional.ofNullable(boardsResponse).map(Arrays::asList).orElseThrow(TrelloBoardNotFoundException::new);
+        return Optional.ofNullable(boardsResponse).map(Arrays::asList).orElse(new ArrayList<>());
     }
 
     private URI getURL(){
