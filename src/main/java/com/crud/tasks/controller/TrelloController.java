@@ -7,7 +7,6 @@ import com.crud.tasks.trello.client.TrelloClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -29,7 +28,7 @@ public class TrelloController {
                     System.out.println(trelloBoardDto.getId() + " " + trelloBoardDto.getName());
                     System.out.println("This board contains lists: ");
                     trelloBoardDto.getLists().forEach(trelloList ->
-                        System.out.println(trelloList.getId() + " - " + trelloList.getName() + " - " + trelloList.isClesed()));
+                        System.out.println(trelloList.getId() + " - " + trelloList.getName() + " - " + trelloList.isClosed()));
                 });
     }
 
