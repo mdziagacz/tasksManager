@@ -39,7 +39,7 @@ public class TrelloClient {
 
         try {
             TrelloBoardDto[] boardsResponse = restTemplate.getForObject(url, TrelloBoardDto[].class);
-            return Optional.ofNullable(boardsResponse).map(Arrays::asList).get();
+            return Optional.ofNullable(boardsResponse).map(Arrays::asList).orElse(Arrays.asList(new TrelloBoardDto[0]));
         }catch (RestClientException e){
             LOGGER.error(e.getMessage(), e);
             return new ArrayList<>();
