@@ -22,10 +22,8 @@ dependencies {
 	compile('org.projectlombok:lombok:1.18.8')
 	annotationProcessor ('org.projectlombok:lombok:1.18.8')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
-	compile('mysql:mysql-connector-java')
+	//compile('mysql:mysql-connector-java')
 
-/*
 	compile('org.postgresql:postgresql')
-	providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
-*/
+	//providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
 }
