@@ -9,6 +9,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import static java.util.Optional.ofNullable;
+
 @Service
 public class SimpleEmailService {
 
@@ -33,9 +35,7 @@ public class SimpleEmailService {
         mailMessage.setTo(mail.getMailTo());
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
-        if (mail.getToCC() != null) {
-            mailMessage.setCc(mail.getToCC());
-        }
+        ofNullable(mail.getToCC()).ifPresent(cc -> mailMessage.setCc(cc));
         return mailMessage;
     }
 }
