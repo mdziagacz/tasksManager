@@ -28,8 +28,17 @@ public class EmailScheduler {
         simpleEmailService.send(new Mail(
                 adminConfig.getAdminMail(),
                 SUBJECT,
-                "You've got " + size + " tasks in database",
+                getMessage(size),
                 null
         ));
+    }
+
+    private String getMessage(long size){
+        return new StringBuilder()
+                .append("You've got ")
+                .append(size)
+                .append((size == 1) ? " task" : " tasks")
+                .append(" in database")
+                .toString();
     }
 }
