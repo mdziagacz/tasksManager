@@ -34,7 +34,7 @@ public class EmailScheduler {
     }
 
     private String getMessage(long size){
-        return new StringBuilder()
+        return (size == 0) ? "There is no any task in the database" : new StringBuilder()
                 .append("You've got ")
                 .append(size)
                 .append((size == 1) ? " task" : " tasks")
