@@ -7,6 +7,7 @@ import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -19,9 +20,8 @@ import java.util.List;
 import java.util.Optional;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.hamcrest.Matchers.is;
@@ -103,10 +103,31 @@ public class TaskControllerTestSuite {
     }
 
     @Test
-    public void shouldCreateAndDeleteTask() {
-/*
-        methods createTask() and deleteTask() doesn't return any object
-        how to test them? no data to check
-*/
+    public void testCreateTask() throws Exception {
+        //Given
+        Task task = new Task(1L, "test", "test_task");
+
+        when(taskMapper.mapToTask(any(TaskDto.class))).thenReturn(task);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(task);
+
+        //Then & When
+        mockMvc.perform(post("/v1/task/createTask")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk());
+
+        verify(dbService, times(1)).saveTask(task);
+    }
+
+    @Test
+    public void testDeleteTask() throws Exception {
+        //Given & Then & When
+        mockMvc.perform(delete("/v1/task/deleteTask")
+                .param("taskId", "1"));
+
+        verify(dbService, times(1)).deleteTask(1L);
     }
 }
