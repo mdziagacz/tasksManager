@@ -7,7 +7,6 @@ import com.crud.tasks.service.DbService;
 import com.google.gson.Gson;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -80,11 +79,6 @@ public class TaskControllerTestSuite {
         TaskDto taskDto = new TaskDto(1L, "test", "test_task");
 
         when(taskMapper.mapToTaskDto(task)).thenReturn(taskDto);
-
-        // when(taskMapper.mapToTask(taskDto)).thenReturn(task);
-        // why it doesn't work?
-        // throws: java.lang.AssertionError: No value at JSON path "$.id"
-
         when(taskMapper.mapToTask(any(TaskDto.class))).thenReturn(task);
         when(dbService.saveTask(task)).thenReturn(task);
 
@@ -126,7 +120,8 @@ public class TaskControllerTestSuite {
     public void testDeleteTask() throws Exception {
         //Given & Then & When
         mockMvc.perform(delete("/v1/task/deleteTask")
-                .param("taskId", "1"));
+                .param("taskId", "1"))
+                .andExpect(status().isOk());
 
         verify(dbService, times(1)).deleteTask(1L);
     }
