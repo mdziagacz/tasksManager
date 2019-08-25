@@ -41,4 +41,14 @@ public class EmailScheduler {
                 .append(" in database")
                 .toString();
     }
+
+    @Scheduled(cron = "0 0 6 * * MON-FRI")
+    public void sendDailyTasksReport() {
+        simpleEmailService.sendDailyInfo(new Mail(
+                adminConfig.getAdminMail(),
+                "Daily report",
+                "",
+                null
+        ));
+    }
 }

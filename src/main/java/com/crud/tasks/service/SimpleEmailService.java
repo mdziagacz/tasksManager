@@ -52,4 +52,23 @@ public class SimpleEmailService {
         ofNullable(mail.getToCC()).ifPresent(mailMessage::setCc);
         return mailMessage;
     }
+
+    public void sendDailyInfo(final Mail mail) {
+        LOGGER.info("daily email preparation...");
+        try {
+            javaMailSender.send(createDailyReport(mail));
+            LOGGER.info("massage has been sent");
+        } catch (MailException e) {
+            LOGGER.error("failed to process mail sending: ", e.getMessage(), e);
+        }
+    }
+
+    private MimeMessagePreparator createDailyReport(final Mail mail){
+        return mimeMessage -> {
+            MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
+            messageHelper.setTo(mail.getMailTo());
+            messageHelper.setSubject(mail.getSubject());
+            messageHelper.setText(mailCreatorService.buildTasksQuaEmail(), true);
+        };
+    }
 }

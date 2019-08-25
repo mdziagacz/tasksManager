@@ -1,5 +1,6 @@
 package com.crud.tasks.service;
 
+import com.crud.tasks.domain.Task;
 import com.crud.tasks.trello.config.AdminConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +20,9 @@ public class MailCreatorService {
 
     @Autowired
     AdminConfig adminConfig;
+
+    @Autowired
+    DbService dbService;
 
     public String buildTrelloCardEmail(String message){
         List<String> functionality = new ArrayList<>();
@@ -42,5 +46,22 @@ public class MailCreatorService {
         context.setVariable("admin_config", adminConfig);
         context.setVariable("application_functionality", functionality);
         return templateEngine.process("mail/created-trello-card-mail", context);
+    }
+
+    public String buildTasksQuaEmail(){
+        List<Task> tasks = dbService.getAllTasks();
+        int taskQua = tasks.size();
+
+        Context context = new Context();
+        context.setVariable("preview", "daily info");
+        context.setVariable("is_friend", true);
+        context.setVariable("admin_config", adminConfig);
+        context.setVariable("tasks_qua", taskQua);
+        context.setVariable("tasks_list", tasks);
+        context.setVariable("show_button", true);
+        context.setVariable("tasks_url", "https://mohhio.github.io");
+        context.setVariable("button", "Manage tasks");
+        context.setVariable("goodbye", "Have a nice day!");
+        return templateEngine.process("mail/tasks-qua-info-mail", context);
     }
 }
