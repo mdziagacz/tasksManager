@@ -12,13 +12,13 @@ import org.springframework.stereotype.Component;
 public class EmailScheduler {
 
     @Autowired
-    SimpleEmailService simpleEmailService;
+    private SimpleEmailService simpleEmailService;
 
     @Autowired
-    TaskRepository taskRepository;
+    private TaskRepository taskRepository;
 
     @Autowired
-    AdminConfig adminConfig;
+    private AdminConfig adminConfig;
 
     private static final String SUBJECT = "Tasks: Once a day email";
 

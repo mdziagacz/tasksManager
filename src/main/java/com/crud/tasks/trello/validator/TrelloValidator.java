@@ -15,7 +15,7 @@ public class TrelloValidator {
     private static final Logger LOGGER = LoggerFactory.getLogger(TrelloFacade.class);
 
     public void validateCard(final TrelloCard trelloCard) {
-        if (trelloCard.getName().equals("test")) {
+        if ("test".equals(trelloCard.getName())) {
             LOGGER.info("Someone is testing my application");
         } else {
             LOGGER.info("Seems my application is used in properly way");
